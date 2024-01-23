@@ -19,9 +19,9 @@ def scrape_and_save_to_csv():
                 break
             
             for person in wanted:
-                name = person.find('strong').text
-                link = person.find('a')['href']
-                results.append({'Name': name, 'Link': f"https://poszukiwani.policja.pl{link}"})
+                wanted = person.find('strong').text
+                wantedLink = person.find('a')['href']
+                results.append({'Name': wanted, 'Link': f"https://poszukiwani.policja.pl{wantedLink}"})
             
             page_number += 1
 
