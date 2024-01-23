@@ -12,7 +12,8 @@ try:
     for person in wanted:
 
         wanted = person.find('strong').text
-        print(wanted)
+        wantedLink = person.find('a')['href']
+        print(f"{wanted} https://poszukiwani.policja.pl{wantedLink}")
 
 except Exception as e:
     print(e)
