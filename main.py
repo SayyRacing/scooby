@@ -39,11 +39,51 @@ def scrape_and_save_to_csv():
     except Exception as e:
         print(e)
 
-def get_wanted_by_name(name):
+polish_police_dict = {
+    'A': 2,
+    'B': 3,
+    'C': 4,
+    'Ć': 5,
+    'D': 6,
+    'E': 7,
+    'Ę': 8,
+    'F': 9,
+    'G': 10,
+    'H': 11,
+    'I': 12,
+    'J': 13,
+    'K': 14,
+    'L': 15,
+    'Ł': 16,
+    'M': 17,
+    'N': 18,
+    'O': 19,
+    'Ó': 20,
+    'P': 21,
+    'Q': 22,
+    'R': 23,
+    'S': 24,
+    'Ś': 25,
+    'T': 26,
+    'U': 27,
+    'V': 28,
+    'W': 29,
+    'X': 30,
+    'Y': 31,
+    'Z': 32,
+    'Ż': 33,
+    'Ź': 34,
+}
+
+def get_wanted_by_last_name(name):
     try:
-        addon = 0
+        name = name.upper()  # Convert the name to uppercase
+        first_letter = name[0]  # Get the first letter of the name
+        letter_filter = polish_police_dict[first_letter]  # Match the first letter with a number from the dictionary
+
+        page_number = 0  # Addon to the url to get the next page
         while True:    
-            source = requests.get(f'https://poszukiwani.policja.pl/pos/form/5,Poszukiwani.html?l=19' + f'&page={addon}')
+            source = requests.get(f'https://poszukiwani.policja.pl/pos/form/5,Poszukiwani.html?l={letter_filter}' + f'&page={page_number}')
             print(source.url)
             source.raise_for_status()
             soup = BeautifulSoup(source.text, 'html.parser')
@@ -57,7 +97,7 @@ def get_wanted_by_name(name):
                 if name in wanted:
                     wantedLink = person.find('a')['href']
                     print(f"{wanted} - https://poszukiwani.policja.pl{wantedLink}")
-            addon += 1
+            page_number += 1
             
 
     except Exception as e:
@@ -65,5 +105,5 @@ def get_wanted_by_name(name):
 
 #scrape_and_save_to_csv()
 
-get_wanted_by_name('OSTROWSKI')
+get_wanted_by_last_name('kojot')
 
