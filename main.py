@@ -39,4 +39,31 @@ def scrape_and_save_to_csv():
     except Exception as e:
         print(e)
 
-scrape_and_save_to_csv()
+def get_wanted_by_name(name):
+    try:
+        addon = 0
+        while True:    
+            source = requests.get(f'https://poszukiwani.policja.pl/pos/form/5,Poszukiwani.html?l=19' + f'&page={addon}')
+            print(source.url)
+            source.raise_for_status()
+            soup = BeautifulSoup(source.text, 'html.parser')
+            wanted = soup.find_all('li', class_='threeRows thumbList')
+
+            if not wanted:  # If no li elements are found, break the loop
+                break
+            
+            for person in wanted:
+                wanted = person.find('strong').text
+                if name in wanted:
+                    wantedLink = person.find('a')['href']
+                    print(f"{wanted} - https://poszukiwani.policja.pl{wantedLink}")
+            addon += 1
+            
+
+    except Exception as e:
+        print(e)
+
+#scrape_and_save_to_csv()
+
+get_wanted_by_name('OSTROWSKI')
+
