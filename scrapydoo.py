@@ -40,12 +40,13 @@ class WantedPersonsSpider(scrapy.Spider):
     def spider_closed(self, spider):
         print(f"Number of pages scraped: {self.page_count}")
 
-# Uruchom proces Scrapy
-process = CrawlerProcess()
-start_time = time.time()
-process.crawl(WantedPersonsSpider)
-process.start()
-end_time = time.time()
-elapsed_time = end_time - start_time
-minutes, seconds = divmod(elapsed_time, 60)
-print(f"Process duration: {minutes:.0f} minutes {seconds:.2f} seconds")
+def scrapy_find_all():
+    # Uruchom proces Scrapy
+    process = CrawlerProcess()
+    start_time = time.time()
+    process.crawl(WantedPersonsSpider)
+    process.start()
+    end_time = time.time()
+    elapsed_time = end_time - start_time
+    minutes, seconds = divmod(elapsed_time, 60)
+    print(f"Process duration: {minutes:.0f} minutes {seconds:.2f} seconds")
