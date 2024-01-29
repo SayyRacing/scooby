@@ -1,42 +1,28 @@
-import requests
-from bs4 import BeautifulSoup
-import csv
-from datetime import date
+from getByName import get_wanted_by_last_name
+from scrapydoo import scrapy_find_all
 
-def scrape_and_save_to_csv():
-    try:
-        page_number = 0
-        results = []
-        
-        while True:
-            print(page_number)
-            source = requests.get(f'https://poszukiwani.policja.pl/pos/form/5,Poszukiwani.html?page={page_number}')
-            source.raise_for_status()
-            soup = BeautifulSoup(source.text, 'html.parser')
-            wanted = soup.find_all('li', class_='threeRows thumbList')
-            
-            if not wanted:
-                break
-            
-            for person in wanted:
-                wanted = person.find('strong').text
-                wantedLink = person.find('a')['href']
-                results.append({'Name': wanted, 'Link': f"https://poszukiwani.policja.pl{wantedLink}"})
-            
-            page_number += 1
+def console_menu():
+    while True:
+        print("1. Search by name")
+        print("2. Scrape all and save to CSV")
+        print("3. Exit")
+        choice = input("Enter your choice: ")
 
-        today = date.today()
-        file_name = f"results_{today}.csv"
+        if choice == '1':
+            name = input("Enter the name: ")
+            get_wanted_by_last_name(name)
+        elif choice == '2':
+            print("WARNING This may take a while. Are you sure you want to continue? (y/n)")
+            choice = input("Enter your choice: ")
+            if choice == 'y':
+                scrapy_find_all()
+            else:
+                print("Aborting...")
+                continue
+        elif choice == '3':
+            break
+        else:
+            print("Invalid choice. Please enter 1, 2, or 3.")
 
-        with open(file_name, 'w', newline='') as file:
-            fieldnames = ['Name', 'Link']
-            writer = csv.DictWriter(file, fieldnames=fieldnames)
-            writer.writeheader()
-            writer.writerows(results)
+console_menu()
 
-        print(f"Scraping completed. Results saved to {file_name}")
-
-    except Exception as e:
-        print(e)
-
-scrape_and_save_to_csv()
