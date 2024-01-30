@@ -1,9 +1,10 @@
-# scooby
+# Scooby 
 
-Tytuł projektu: Scooby
 Autorzy:
-Szymon Paluszewski. Nr. 58193 @SayyRacing
-Bartosz Rokita. Nr. 58197 @ketrabx1x
+
+- Szymon Paluszewski. Nr. 58193 @SayyRacing,
+
+- Bartosz Rokita. Nr. 58197 @ketrabx1x
 
 Praca wykonana na potrzeby zaliczenia przedmiotu "OSINT - narzędzia i rozwiązywanie spraw" prowadzonego przez mgr Grzegorza Piotrowskiego na Uniwersytecie WSB Merito w Gdańsku.
 
